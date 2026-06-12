@@ -1,34 +1,868 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi página web</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RunZone | Tienda Running</title>
+
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      padding: 50px;
+      background: #f4f6f8;
+      color: #111;
     }
 
-    .card {
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.95);
+      color: white;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #ff4d00;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff4d00;
+    }
+
+    .cart-btn {
+      background: #ff4d00;
+      color: white;
+      border: none;
+      padding: 11px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hero {
+      min-height: 88vh;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.85), rgba(0,0,0,0.25)),
+        url("https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 8%;
+    }
+
+    .hero-content {
+      max-width: 650px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #ff4d00;
+      color: white;
+      padding: 9px 18px;
+      border-radius: 25px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 65px;
+      line-height: 1;
+      margin-bottom: 25px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      line-height: 1.5;
+      margin-bottom: 35px;
+      color: #eee;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 15px 28px;
+      border-radius: 35px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 16px;
+    }
+
+    .btn-primary {
+      background: #ff4d00;
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
       background: white;
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 600px;
-      margin: auto;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      color: #111;
+      transform: scale(1.05);
     }
 
-    h1 {
-      color: #e66a00;
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+      background: white;
+      color: #111;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 45px 8%;
+      margin-top: -70px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 22px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .stat-card h2 {
+      color: #ff4d00;
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .section {
+      padding: 70px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 17px;
+    }
+
+    .search-area {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      background: white;
+      border-radius: 40px;
+      overflow: hidden;
+      display: flex;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .search-area input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 17px 22px;
+      font-size: 16px;
+    }
+
+    .search-area button {
+      border: none;
+      background: #ff4d00;
+      color: white;
+      padding: 0 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .category-btn {
+      border: none;
+      background: #111;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background: #ff4d00;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #ff4d00;
+      color: white;
+      padding: 7px 13px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 22px;
+    }
+
+    .product-info h3 {
+      font-size: 23px;
+      margin-bottom: 10px;
+    }
+
+    .product-info p {
+      color: #666;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .price {
+      font-size: 25px;
+      color: #ff4d00;
+      font-weight: bold;
+    }
+
+    .rating {
+      color: #ffb000;
+      font-size: 15px;
+    }
+
+    .add-btn {
+      width: 100%;
+      border: none;
+      background: #111;
+      color: white;
+      padding: 14px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .add-btn:hover {
+      background: #ff4d00;
+    }
+
+    .banner {
+      background:
+        linear-gradient(90deg, rgba(255,77,0,0.95), rgba(0,0,0,0.9)),
+        url("https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      border-radius: 35px;
+      padding: 55px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .banner h2 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .banner p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .banner-box {
+      background: rgba(255,255,255,0.12);
+      padding: 25px;
+      border-radius: 25px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .banner-box h3 {
+      font-size: 35px;
+      color: #fff;
+    }
+
+    .features {
+      background: #111;
+      color: white;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+    }
+
+    .feature {
+      background: #1e1e1e;
+      border-radius: 22px;
+      padding: 28px;
+      text-align: center;
+      border: 1px solid #333;
+    }
+
+    .feature h3 {
+      color: #ff4d00;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+
+    footer {
+      background: #000;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -430px;
+      width: 410px;
+      max-width: 90%;
+      height: 100vh;
+      background: white;
+      z-index: 300;
+      box-shadow: -8px 0 30px rgba(0,0,0,0.3);
+      padding: 25px;
+      transition: 0.4s;
+      overflow-y: auto;
+    }
+
+    .cart-panel.active {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .close-cart {
+      border: none;
+      background: #ff4d00;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart-item {
+      background: #f1f1f1;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .cart-item button {
+      border: none;
+      background: #111;
+      color: white;
+      padding: 7px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .cart-total {
+      margin-top: 25px;
+      font-size: 25px;
+      font-weight: bold;
+      color: #ff4d00;
+    }
+
+    .pay-btn {
+      width: 100%;
+      border: none;
+      background: #ff4d00;
+      color: white;
+      margin-top: 18px;
+      padding: 15px;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .pay-btn:hover {
+      background: #111;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      nav a {
+        margin-left: 0;
+      }
+
+      .hero h1 {
+        font-size: 43px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+
+      .stats {
+        margin-top: 0;
+      }
+
+      .banner {
+        grid-template-columns: 1fr;
+        padding: 35px;
+      }
+
+      .banner h2 {
+        font-size: 32px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <h1>Hola </h1>
-    <p>BYE: con GitHub Pages.</p>
+
+  <header>
+    <div class="logo">Run<span>Zone</span></div>
+
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#productos">Productos</a>
+      <a href="#promo">Promo</a>
+      <a href="#beneficios">Beneficios</a>
+    </nav>
+
+    <button class="cart-btn" onclick="abrirCarrito()">
+      🛒 Carrito <span id="cart-count">0</span>
+    </button>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <span class="tag">Nueva colección 2026</span>
+      <h1>Corre más lejos, corre mejor.</h1>
+      <p>
+        Equípate con tenis, ropa deportiva, accesorios y tecnología para llevar
+        tus entrenamientos al siguiente nivel.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">
+          Comprar ahora
+        </button>
+
+        <button class="btn-secondary" onclick="document.getElementById('promo').scrollIntoView({behavior:'smooth'})">
+          Ver promoción
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat-card">
+      <h2>+50</h2>
+      <p>Productos deportivos</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>24h</h2>
+      <p>Envío rápido disponible</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>4.9★</h2>
+      <p>Calificación promedio</p>
+    </div>
+  </section>
+
+  <section class="section" id="productos">
+    <h2 class="section-title">Productos para Running</h2>
+    <p class="section-subtitle">
+      Encuentra el equipo perfecto para entrenar, competir o iniciar tu camino runner.
+    </p>
+
+    <div class="search-area">
+      <input type="text" id="searchInput" placeholder="Buscar producto..." onkeyup="buscarProducto()">
+      <button>Buscar</button>
+    </div>
+
+    <div class="categories">
+      <button class="category-btn active" onclick="filtrarCategoria('todos')">Todos</button>
+      <button class="category-btn" onclick="filtrarCategoria('tenis')">Tenis</button>
+      <button class="category-btn" onclick="filtrarCategoria('ropa')">Ropa</button>
+      <button class="category-btn" onclick="filtrarCategoria('accesorios')">Accesorios</button>
+      <button class="category-btn" onclick="filtrarCategoria('tecnologia')">Tecnología</button>
+    </div>
+
+    <div class="products" id="product-list">
+
+      <div class="product-card" data-name="tenis run pro x" data-category="tenis">
+        <span class="badge">Más vendido</span>
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" alt="Tenis Run Pro X">
+        <div class="product-info">
+          <h3>Tenis Run Pro X</h3>
+          <p>Amortiguación ligera, suela reactiva y diseño ideal para largas distancias.</p>
+          <div class="price-row">
+            <div class="price">$1,899</div>
+            <div class="rating">★★★★★</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Tenis Run Pro X', 1899)">Agregar al carrito</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="playera dry fit" data-category="ropa">
+        <span class="badge">Nuevo</span>
+        <img src="https://images.unsplash.com/photo-1518459031867-a89b944bffe4?auto=format&fit=crop&w=900&q=80" alt="Playera Dry Fit">
+        <div class="product-info">
+          <h3>Playera Dry Fit</h3>
+          <p>Ligera, fresca y cómoda para entrenamientos intensos.</p>
+          <div class="price-row">
+            <div class="price">$449</div>
+            <div class="rating">★★★★☆</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Playera Dry Fit', 449)">Agregar al carrito</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="short runner elite" data-category="ropa">
+        <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=900&q=80" alt="Short Runner Elite">
+        <div class="product-info">
+          <h3>Short Runner Elite</h3>
+          <p>Short deportivo con tela transpirable y ajuste cómodo.</p>
+          <div class="price-row">
+            <div class="price">$529</div>
+            <div class="rating">★★★★★</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Short Runner Elite', 529)">Agregar al carrito</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="smartwatch pace 5" data-category="tecnologia">
+        <span class="badge">Top tech</span>
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" alt="Smartwatch Pace 5">
+        <div class="product-info">
+          <h3>Smartwatch Pace 5</h3>
+          <p>Monitorea ritmo, distancia, frecuencia cardíaca y calorías.</p>
+          <div class="price-row">
+            <div class="price">$2,499</div>
+            <div class="rating">★★★★★</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Smartwatch Pace 5', 2499)">Agregar al carrito</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="cinturón hidratación" data-category="accesorios">
+        <img src="https://images.unsplash.com/photo-1562771242-a02d9090c90c?auto=format&fit=crop&w=900&q=80" alt="Cinturón de Hidratación">
+        <div class="product-info">
+          <h3>Cinturón Hidratación</h3>
+          <p>Perfecto para llevar agua, geles y celular durante tus carreras.</p>
+          <div class="price-row">
+            <div class="price">$399</div>
+            <div class="rating">★★★★☆</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Cinturón Hidratación', 399)">Agregar al carrito</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="gorra runner air" data-category="accesorios">
+        <img src="https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=80" alt="Gorra Runner Air">
+        <div class="product-info">
+          <h3>Gorra Runner Air</h3>
+          <p>Protección solar, diseño ligero y ventilación superior.</p>
+          <div class="price-row">
+            <div class="price">$299</div>
+            <div class="rating">★★★★☆</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Gorra Runner Air', 299)">Agregar al carrito</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="audífonos sport beat" data-category="tecnologia">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" alt="Audífonos Sport Beat">
+        <div class="product-info">
+          <h3>Audífonos Sport Beat</h3>
+          <p>Resistentes al sudor, inalámbricos y con batería de larga duración.</p>
+          <div class="price-row">
+            <div class="price">$899</div>
+            <div class="rating">★★★★★</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Audífonos Sport Beat', 899)">Agregar al carrito</button>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="calcetas compresión" data-category="ropa">
+        <span class="badge">Oferta</span>
+        <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=900&q=80" alt="Calcetas de Compresión">
+        <div class="product-info">
+          <h3>Calcetas Compresión</h3>
+          <p>Mejor soporte muscular para carreras y recuperación.</p>
+          <div class="price-row">
+            <div class="price">$249</div>
+            <div class="rating">★★★★☆</div>
+          </div>
+          <button class="add-btn" onclick="agregarCarrito('Calcetas Compresión', 249)">Agregar al carrito</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="promo">
+    <div class="banner">
+      <div>
+        <h2>Entrena para tu próxima meta</h2>
+        <p>
+          Obtén 20% de descuento en accesorios de running al comprar cualquier par
+          de tenis. Ideal para prepararte para 5K, 10K o medio maratón.
+        </p>
+      </div>
+
+      <div class="banner-box">
+        <h3>20% OFF</h3>
+        <p>En accesorios seleccionados</p>
+        <br>
+        <button class="btn-primary" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">
+          Ver productos
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section features" id="beneficios">
+    <h2 class="section-title">¿Por qué comprar en RunZone?</h2>
+    <p class="section-subtitle" style="color:#bbb;">
+      Equipo deportivo pensado para corredores principiantes y avanzados.
+    </p>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <h3>🏃 Equipo especializado</h3>
+        <p>Productos pensados para running, entrenamiento y competencia.</p>
+      </div>
+
+      <div class="feature">
+        <h3>🚚 Envío rápido</h3>
+        <p>Recibe tus productos de forma rápida y segura.</p>
+      </div>
+
+      <div class="feature">
+        <h3>💳 Compra segura</h3>
+        <p>Esta es una demo visual lista para adaptar a pagos reales.</p>
+      </div>
+
+      <div class="feature">
+        <h3>🔥 Diseño moderno</h3>
+        <p>Una tienda llamativa, responsive y funcional.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 RunZone | Tienda demo de Running creada con HTML, CSS y JavaScript</p>
+  </footer>
+
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h2>Tu carrito</h2>
+      <button class="close-cart" onclick="cerrarCarrito()">X</button>
+    </div>
+
+    <div id="cart-items"></div>
+
+    <div class="cart-total">
+      Total: $<span id="cart-total">0</span>
+    </div>
+
+    <button class="pay-btn" onclick="finalizarCompra()">Finalizar compra</button>
   </div>
+
+  <script>
+    let carrito = [];
+    let total = 0;
+    let categoriaActual = "todos";
+
+    function abrirCarrito() {
+      document.getElementById("cartPanel").classList.add("active");
+    }
+
+    function cerrarCarrito() {
+      document.getElementById("cartPanel").classList.remove("active");
+    }
+
+    function agregarCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      total += precio;
+      actualizarCarrito();
+      abrirCarrito();
+    }
+
+    function actualizarCarrito() {
+      const cartItems = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+      const cartCount = document.getElementById("cart-count");
+
+      cartItems.innerHTML = "";
+
+      carrito.forEach((producto, index) => {
+        const item = document.createElement("div");
+        item.classList.add("cart-item");
+
+        item.innerHTML = `
+          <div>
+            <strong>${producto.nombre}</strong><br>
+            $${producto.precio}
+          </div>
+          <button onclick="eliminarProducto(${index})">❌</button>
+        `;
+
+        cartItems.appendChild(item);
+      });
+
+      cartTotal.textContent = total;
+      cartCount.textContent = carrito.length;
+    }
+
+    function eliminarProducto(index) {
+      total -= carrito[index].precio;
+      carrito.splice(index, 1);
+      actualizarCarrito();
+    }
+
+    function buscarProducto() {
+      aplicarFiltros();
+    }
+
+    function filtrarCategoria(categoria) {
+      categoriaActual = categoria;
+
+      const botones = document.querySelectorAll(".category-btn");
+      botones.forEach(btn => btn.classList.remove("active"));
+
+      event.target.classList.add("active");
+
+      aplicarFiltros();
+    }
+
+    function aplicarFiltros() {
+      const texto = document.getElementById("searchInput").value.toLowerCase();
+      const productos = document.querySelectorAll(".product-card");
+
+      productos.forEach(producto => {
+        const nombre = producto.getAttribute("data-name").toLowerCase();
+        const categoria = producto.getAttribute("data-category");
+
+        const coincideTexto = nombre.includes(texto);
+        const coincideCategoria = categoriaActual === "todos" || categoria === categoriaActual;
+
+        if (coincideTexto && coincideCategoria) {
+          producto.style.display = "block";
+        } else {
+          producto.style.display = "none";
+        }
+      });
+    }
+
+    function finalizarCompra() {
+      if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+      } else {
+        alert("Gracias por tu compra. Esta tienda es una demostración.");
+      }
+    }
+  </script>
+
 </body>
 </html>
